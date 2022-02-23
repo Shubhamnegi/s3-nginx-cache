@@ -7,6 +7,7 @@ Idea is to reduce the number of api call on s3 by using a caching layer in b/w. 
 Create an custom path which will check for cache first and if the cache is not available then get data from s3 bucket and cache the result for next attempt.
 
 When the data is being served from nginx cache there is 25% reduction in response time
+Since gzip is enabled, there is reduction in contnet size also, for application/json data there is 77% reduction.
 
 ## Files
 
