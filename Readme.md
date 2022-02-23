@@ -6,6 +6,8 @@ Idea is to reduce the number of api call on s3 by using a caching layer in b/w. 
 ## Implementation
 Create an custom path which will check for cache first and if the cache is not available then get data from s3 bucket and cache the result for next attempt.
 
+When the data is being served from nginx cache there is 25% reduction in response time
+
 ## Files
 
 - Templates: use template folder to create a template file, here env vars can be used to replace place holders. Any file name with .template will be copied to conf.d folder in nginx
