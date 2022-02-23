@@ -25,5 +25,5 @@ Suppose the bucket region name is `ap-southeast-1`, then replace docker-compose.
 The url should look like `curl -XGET -i "http://custom.com/s3_cached/abc/file.json"        `
 
 ## References: 
-https://www.scaleway.com/en/docs/tutorials/setup-nginx-reverse-proxy-s3/
-https://github.com/nginxinc/nginx-s3-gateway
+- https://www.scaleway.com/en/docs/tutorials/setup-nginx-reverse-proxy-s3/
+- https://github.com/nginxinc/nginx-s3-gateway
