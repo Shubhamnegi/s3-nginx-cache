@@ -23,7 +23,23 @@ Since gzip is enabled, there is reduction in contnet size also, for application/
 ## Usage:
 Suppose the bucket region name is `ap-southeast-1`, then replace docker-compose.yaml  `NGINX_BUCKET_HOST` with the `s3-ap-southeast-1.amazonaws.com`, and the bucket name is `abc` and  your proxy domain is custom.com the replace `NGINX_HOST` in docker compose with custom.com.
 
-The url should look like `curl -XGET -i "http://custom.com/s3_cached/abc/file.json"        `
+The url should look like `curl -XGET -i "http://custom.com/s3_cached/abc/file.json"`
+
+
+# Purging cache
+
+Nginx Provides `PURGE` method to purge cache for routes. 
+Example: `curl -X PURGE -D – "https://www.example.com/*"`
+Sample Nginx Config
+```
+http {
+    # ...
+    map $request_method $purge_method {
+        PURGE 1;
+        default 0;
+    }
+}
+```
 
 ## References: 
 - https://www.scaleway.com/en/docs/tutorials/setup-nginx-reverse-proxy-s3/
