@@ -43,6 +43,9 @@ http {
 
 But this mehtod work fine with Nginx Plus only. For the workaround we are using `https://github.com/nginx-modules/ngx_cache_purge.git`. This module provided an `.so` file which is added to nginx and `loadmodule` is being used to load the module dynamicaly.
 
+Sample Cache invalidation url
+`curl -XGET -i https://domain.com/purge/abc/file.json`
+
 
 
 
