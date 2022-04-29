@@ -15,10 +15,7 @@ Since gzip is enabled, there is reduction in contnet size also, for application/
     - caching.conf.template : Config required to store cache.
     - s3.conf.template : Config to route caching requests.
 - docker-compose: To create docker container with required config
-- nginx.conf: Custom nginx conf. This file is not mandatory if this is not required simply remove mount volume from docker compose i.e
-```
-    - ./nginx.conf:/etc/nginx/nginx.conf:ro # comment this is nginx.conf is not required
-```
+- nginx.conf: Custom nginx conf (Currently used to load module for cache)
 
 ## Usage:
 Suppose the bucket region name is `ap-southeast-1`, then replace docker-compose.yaml  `NGINX_BUCKET_HOST` with the `s3-ap-southeast-1.amazonaws.com`, and the bucket name is `abc` and  your proxy domain is custom.com the replace `NGINX_HOST` in docker compose with custom.com.
