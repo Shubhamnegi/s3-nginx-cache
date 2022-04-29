@@ -57,6 +57,6 @@ server {
       add_header             Cache-Control max-age=31536000;
       add_header             X-Cache-Status $upstream_cache_status;
       proxy_pass             http://$bucketHost;
-      proxy_cache_purge      $purge_method;
+      proxy_cache_purge      PURGE from 127.0.0.1;
     }
 }

@@ -1,10 +1,12 @@
 version: '2'
 services:
   web:
-    image: nginx
+    build: 
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./templates:/etc/nginx/templates
-      # - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "8080:80"
     environment:
