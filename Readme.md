@@ -51,3 +51,5 @@ Sample Cache invalidation url
 ## References: 
 - https://www.scaleway.com/en/docs/tutorials/setup-nginx-reverse-proxy-s3/
 - https://github.com/nginxinc/nginx-s3-gateway
+- https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/
+- https://github.com/nginx-modules/ngx_cache_purge
