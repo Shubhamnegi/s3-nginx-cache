@@ -46,6 +46,8 @@ But this mehtod work fine with Nginx Plus only. For the workaround we are using 
 Sample Cache invalidation url
 `curl -XGET -i https://domain.com/purge/abc/file.json`
 
+`*` can be used to purge matching or all paths
+
 
 
 
