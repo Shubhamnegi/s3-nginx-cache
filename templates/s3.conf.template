@@ -3,7 +3,7 @@ server {
 
     # Configure your domain name here:
     server_name  ${NGINX_HOST};
-    access_log   /var/log/nginx/${NGINX_HOST}.access.log  json_combined;
+    #access_log   /var/log/nginx/${NGINX_HOST}.access.log  json_combined;
 
     # Configure your Object Storage bucket URL here:
     set $bucketHost ${NGINX_BUCKET_HOST};
@@ -60,9 +60,61 @@ server {
       proxy_pass             http://$bucketHost;     
     }
 
+    location /map/  {
+      rewrite ^/map/(.*) /$1 break;
+      resolver 1.1.1.1;
+      proxy_http_version     1.1;
+      proxy_redirect off;
+      proxy_set_header       Connection "";
+      proxy_set_header       Authorization '';
+      proxy_set_header       Host maps.googleapis.com;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_set_header       X-Forwarded-For $proxy_add_x_forwarded_for;      
+      proxy_hide_header      Set-Cookie;
+      proxy_ignore_headers   Set-Cookie;
+      proxy_intercept_errors on;
+      add_header             Cache-Control max-age=31536000;
+      proxy_pass             https://maps.googleapis.com;
+    }
+    
+    
+    location /map_cached/ {
+      rewrite ^/map_cached/(.*) /$1 break;
+      resolver               8.8.8.8 ipv6=off;
+      proxy_cache            google_cache;
+      proxy_cache_key        $uri$is_args$arg_place_id;
+      proxy_http_version     1.1;
+      proxy_redirect         off;
+      proxy_set_header       Connection "";
+      proxy_set_header       Authorization '';
+      proxy_set_header       Host maps.googleapis.com;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_set_header       X-Forwarded-For $proxy_add_x_forwarded_for;      
+      proxy_hide_header      Set-Cookie;
+      proxy_ignore_headers   Set-Cookie;
+      proxy_cache_revalidate off;
+      proxy_intercept_errors on;
+      proxy_cache_use_stale  error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_lock       on;
+      proxy_cache_valid      200 304 60m;
+      proxy_hide_header      Cache-Control;
+      proxy_ignore_headers   Cache-Control;
+      proxy_hide_header      Pragma;            
+      proxy_hide_header      Expires;      
+      proxy_ignore_headers Expires;
+      add_header             Cache-Control max-age=31536000;
+      add_header             X-Cache-Status $upstream_cache_status;
+      proxy_pass             https://maps.googleapis.com;
+    }
+
 
      location ~ /purge(/.*) {
             allow              all;
             proxy_cache_purge  s3_cache $1$is_args$args;
+     }
+     
+     location ~ /map_purge(/.*) {
+            allow              all;
+            proxy_cache_purge  google_cache $1$is_args$arg_place_id;
      }   
 }

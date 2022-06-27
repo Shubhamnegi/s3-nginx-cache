@@ -25,6 +25,8 @@ Suppose the bucket region name is `ap-southeast-1`, then replace docker-compose.
 
 The url should look like `curl -XGET -i "http://custom.com/s3_cached/abc/file.json"`
 
+Have also added support to cache google map response
+
 
 # Purging cache
 
